@@ -29,12 +29,8 @@ public:
 		return item;
 	}
 
-	void view() {
-		for (int i = length - 1; i >= 0; i--) {
-			if (i != length - 1) cout << " ";
-			cout << arr[i];
-		}
-		cout << endl;
+	T top() {
+		return arr[top-1];
 	}
 private:
 	T * arr;
