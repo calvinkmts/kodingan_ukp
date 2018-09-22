@@ -1,0 +1,39 @@
+template <class T>
+class Queue {
+public:
+	Queue(int size) {
+		head = 0;
+		tail = 0;
+		this->size = size;
+		arr = new T[size + 1];
+	}
+
+	void queue(T newItem) {
+		if ((tail + 1) % (size + 1) == head) {
+			cout << "Queue is Full" << endl;
+		}
+		else
+		{
+			arr[tail] = newItem;
+			tail = (tail + 1) % size;
+		}
+	}
+
+	void dequeue() {
+		if ((head + 1) % (size + 1) == tail) {
+			cout << "Queue is Empty" << endl;
+		}
+		else
+		{
+			head++;
+		}
+	}
+
+	void front() {
+		cout << arr[head] << endl;
+	}
+private:
+	T * arr;
+	int size;
+	int head, tail;
+};
