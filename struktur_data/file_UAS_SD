@@ -1,0 +1,648 @@
+#include <iostream>
+using namespace std;
+
+///////////////////// STACK STATIC /////////////////////
+
+const int MAX_QUEUE = 255;
+
+class Cstack
+{
+private:
+	int element[MAX_QUEUE];
+	int top;
+public:
+	Cstack();
+	void push(int x);
+	int pop();
+	int full();
+	int empty();
+};
+Cstack::Cstack()
+{
+	top = -1;
+}
+void Cstack::push(int x)
+{
+	if (!full())
+	{
+		top++;
+		element[top] = x;
+	}
+}
+int Cstack::pop()
+{
+	if (!empty())
+	{
+		int temp;
+		temp = element[top];
+		top--;
+		return temp;
+	}
+}
+int Cstack::full()
+{
+	if (top >= (MAX_QUEUE - 1)) return 1;
+	else return 0;
+
+}
+int Cstack::empty()
+{
+	if (top == -1) return 1;
+	else return 0;
+}
+
+////////////////////// QUEUE STATIC ////////////////////////////
+
+const int MAX_STACK = 5;
+
+class Cqueue
+{
+private:
+	int element[MAX_STACK];
+	int tail;
+	int head;
+public:
+	Cqueue();
+	void enqueue(int x);
+	int dequeue();
+	int full();
+	int empty();
+};
+Cqueue::Cqueue()
+{
+	tail = -1;
+	head = 0;
+}
+void Cqueue::enqueue(int x)
+{
+	if (!full())
+	{
+		tail++;
+		element[tail] = x;
+	}
+}
+int Cqueue::dequeue()
+{
+	if (!empty())
+	{
+		int temp;
+		temp = element[head];
+		head++;
+		return temp;
+	}
+}
+int Cqueue::full()
+{
+	if (tail >= (MAX_QUEUE - 1)) return 1;
+	else return 0;
+
+}
+int Cqueue::empty()
+{
+	if (tail<head) return 1;
+	else return 0;
+}
+
+////////////////////// QUEUE STATIC ////////////////////////////
+
+class node
+{
+private:
+	int data;
+	node * next;
+public:
+	node()
+	{
+		next = NULL;
+	}
+	int get()
+	{
+		return data;
+	}
+	void set(int x)
+	{
+		data = x;
+	}
+	node * nget()
+	{
+		return (next);
+	}
+	void nset(node * nextnode)
+	{
+		next = nextnode;
+	}
+};
+
+class Link
+{
+private:
+	node * head, *tail;
+public:
+	Link() { 
+		head = NULL;
+		tail = NULL;
+	}
+	void add(int data)
+	{
+		node * baru;
+		baru = new node;
+		baru->set(data);
+		if (!head)
+		{
+			head = baru;
+			tail = head;
+		}
+		else
+		{
+			tail->nset(baru);
+			tail = baru;
+		}
+	}
+	void view()
+	{
+		node * temp;
+		temp = head;
+		if (temp)
+		{
+			while (temp)
+			{
+				printf("%d", temp->get());
+				temp = temp->nget();
+			}
+		}
+	}
+};
+
+//////////////////////////////////// Binary Tree //////////////////////////
+
+class node
+{
+private:
+	int nowdata;
+	node * left;
+	node * right;
+public:
+	node()
+	{
+		left = NULL;
+		right = NULL;
+	}
+	int get()
+	{
+		return nowdata;
+	}
+	void set(int x)
+	{
+		nowdata = x;
+	}
+	node * lget()
+	{
+		return (left);
+	}
+	void lset(node * nextnode)
+	{
+		left = nextnode;
+	}
+	node * rget(){ 
+		return (right);
+	}
+	void rset(node * nextnode)
+	{
+		right = nextnode;
+	}
+	void add(node *baru)
+	{
+		if (baru->get() < nowdata)
+		{
+			if (left == NULL)
+			{
+				left = baru;
+			}
+			else
+			{
+				left->add(baru);
+			}
+		}
+		else if (baru->get() > nowdata)
+		{
+			if (right == NULL)
+			{
+				right = baru;
+			}
+			else
+			{
+				right->add(baru);
+			}
+		}
+	}
+};
+class tree
+{
+private:
+	node * root;
+public:
+	tree()
+	{
+		root = NULL;
+	}
+	void add(int x)
+	{
+		node * baru;
+		baru = new node;
+		baru->set(x);
+		if (!root)
+		{
+			root = baru;
+		}
+		else
+		{
+			node * temp;
+			temp = root;
+			temp->add(baru);
+		}
+	}
+};
+
+////////////////////////////////// TREE //////////////////////////
+struct Node
+{
+	int data;
+	struct Node* left, *right;
+	Node(int data)
+	{
+		this->data = data;
+		left = right = NULL;
+	}
+};
+
+/* Given a binary tree, print its nodes according to the
+"bottom-up" postorder traversal. */
+void printPostorder(struct Node* node)
+{
+	if (node == NULL)
+		return;
+
+	// first recur on left subtree 
+	printPostorder(node->left);
+
+	// then recur on right subtree 
+	printPostorder(node->right);
+
+	// now deal with the node 
+	cout << node->data << " ";
+}
+
+/* Given a binary tree, print its nodes in inorder*/
+void printInorder(struct Node* node)
+{
+	if (node == NULL)
+		return;
+
+	/* first recur on left child */
+	printInorder(node->left);
+
+	/* then print the data of node */
+	cout << node->data << " ";
+
+	/* now recur on right child */
+	printInorder(node->right);
+}
+
+/* Given a binary tree, print its nodes in preorder*/
+void printPreorder(struct Node* node)
+{
+	if (node == NULL)
+		return;
+
+	/* first print data of node */
+	cout << node->data << " ";
+
+	/* then recur on left sutree */
+	printPreorder(node->left);
+
+	/* now recur on right subtree */
+	printPreorder(node->right);
+}
+
+//////////////////////////////////// COMB SORT /////////////////////////////////
+
+int getNextGap(int gap)
+{
+	// Shrink gap by Shrink factor 
+	gap = (gap * 10) / 13;
+
+	if (gap < 1)
+		return 1;
+	return gap;
+}
+
+// Function to sort a[0..n-1] using Comb Sort 
+void combSort(int a[], int n)
+{
+	// Initialize gap 
+	int gap = n;
+
+	// Initialize swapped as true to make sure that 
+	// loop runs 
+	bool swapped = true;
+
+	// Keep running while gap is more than 1 and last 
+	// iteration caused a swap 
+	while (gap != 1 || swapped == true)
+	{
+		// Find next gap 
+		gap = getNextGap(gap);
+
+		// Initialize swapped as false so that we can 
+		// check if swap happened or not 
+		swapped = false;
+
+		// Compare all elements with current gap 
+		for (int i = 0; i<n - gap; i++)
+		{
+			if (a[i] > a[i + gap])
+			{
+				swap(a[i], a[i + gap]);
+				swapped = true;
+			}
+		}
+	}
+}
+
+///////////////////////// BINARY SEARCH ///////////////////////////
+int binarySearch(int arr[], int l, int r, int x)
+{
+	if (r >= l)
+	{
+		int mid = l + (r - l) / 2;
+
+		// If the element is present at the middle  
+		// itself 
+		if (arr[mid] == x)
+			return mid;
+
+		// If element is smaller than mid, then  
+		// it can only be present in left subarray 
+		if (arr[mid] > x)
+			return binarySearch(arr, l, mid - 1, x);
+
+		// Else the element can only be present 
+		// in right subarray 
+		return binarySearch(arr, mid + 1, r, x);
+	}
+
+	// We reach here when element is not  
+	// present in array 
+	return -1;
+}
+
+//////////////////////////////////// MERGE SORT ////////////////////////
+void merge(int arr[], int l, int m, int r)
+{
+	int i, j, k;
+	int n1 = m - l + 1;
+	int n2 = r - m;
+
+	/* create temp arrays */
+	int L[n1], R[n2];
+
+	/* Copy data to temp arrays L[] and R[] */
+	for (i = 0; i < n1; i++)
+		L[i] = arr[l + i];
+	for (j = 0; j < n2; j++)
+		R[j] = arr[m + 1 + j];
+
+	/* Merge the temp arrays back into arr[l..r]*/
+	i = 0; // Initial index of first subarray 
+	j = 0; // Initial index of second subarray 
+	k = l; // Initial index of merged subarray 
+	while (i < n1 && j < n2)
+	{
+		if (L[i] <= R[j])
+		{
+			arr[k] = L[i];
+			i++;
+		}
+		else
+		{
+			arr[k] = R[j];
+			j++;
+		}
+		k++;
+	}
+
+	/* Copy the remaining elements of L[], if there
+	are any */
+	while (i < n1)
+	{
+		arr[k] = L[i];
+		i++;
+		k++;
+	}
+
+	/* Copy the remaining elements of R[], if there
+	are any */
+	while (j < n2)
+	{
+		arr[k] = R[j];
+		j++;
+		k++;
+	}
+}
+
+/* l is for left index and r is right index of the
+sub-array of arr to be sorted */
+void mergeSort(int arr[], int l, int r)
+{
+	if (l < r)
+	{
+		// Same as (l+r)/2, but avoids overflow for 
+		// large l and h 
+		int m = l + (r - l) / 2;
+
+		// Sort first and second halves 
+		mergeSort(arr, l, m);
+		mergeSort(arr, m + 1, r);
+
+		merge(arr, l, m, r);
+	}
+}
+
+/////////////////////////// QUICK SORT ///////////////////////////
+void swap(int* a, int* b)
+{
+	int t = *a;
+	*a = *b;
+	*b = t;
+}
+
+/* This function takes last element as pivot, places
+the pivot element at its correct position in sorted
+array, and places all smaller (smaller than pivot)
+to left of pivot and all greater elements to right
+of pivot */
+int partition(int arr[], int low, int high)
+{
+	int pivot = arr[high];    // pivot 
+	int i = (low - 1);  // Index of smaller element 
+
+	for (int j = low; j <= high - 1; j++)
+	{
+		// If current element is smaller than or 
+		// equal to pivot 
+		if (arr[j] <= pivot)
+		{
+			i++;    // increment index of smaller element 
+			swap(&arr[i], &arr[j]);
+		}
+	}
+	swap(&arr[i + 1], &arr[high]);
+	return (i + 1);
+}
+
+/* The main function that implements QuickSort
+arr[] --> Array to be sorted,
+low  --> Starting index,
+high  --> Ending index */
+void quickSort(int arr[], int low, int high)
+{
+	if (low < high)
+	{
+		/* pi is partitioning index, arr[p] is now
+		at right place */
+		int pi = partition(arr, low, high);
+
+		// Separately sort elements before 
+		// partition and after partition 
+		quickSort(arr, low, pi - 1);
+		quickSort(arr, pi + 1, high);
+	}
+}
+
+//////////////////////// HASHING EISCH /////////////////////////////
+bool IsPrime(int n)
+{
+	if (n<2)
+		return false;
+	for (int i = 2; i*i <= n; i++)
+	{
+		if (n%i == 0)
+			return false;
+	}
+	return true;
+}
+template<class T>
+int hashcode(T n, int MAX)
+{
+	char *p = (char *)&n;
+	unsigned h = 0, g = 0;
+	int i;
+	for (i = 0; i<sizeof(T); ++p, ++i)
+		h = (h << 5) + (*p);
+	return h%MAX;
+}
+int hashcode(char *s, int MAX)
+{
+	char *p;
+	unsigned h = 0, g = 0;
+	for (p = s; *p != '\0'; p = p + 1)
+		h = (h << 5) + (*p);
+	return h%MAX;
+}
+class CRecord
+{
+private:
+	int Value;
+	int Link;
+	bool flag;
+public:
+	CRecord()
+	{
+		Link = -1;
+		flag = false;
+	}
+	void SetValue(const int &n)
+	{
+		Value = n;
+	}
+	int GetValue()
+	{
+		return Value;
+	}
+	void SetLink(int n)
+	{
+		Link = n;
+	}
+	int GetLink()
+	{
+		return Link;
+	}
+	54
+		bool HasValue()
+	{
+		return flag;
+	}
+	void SetFlag(bool b)
+	{
+		flag = b;
+	}
+};
+int MakePrime(int n)
+{
+	while (!IsPrime(n))
+		++n;
+	return n;
+}
+class CHashTable
+{
+private:
+	CRecord *Data;
+	int Size;
+	int Count;
+public:
+	CHashTable(int size)
+	{
+		if (size<2)
+			size = 2;
+		Size = MakePrime(size);
+		Data = new CRecord[Size];
+		Count = 0;
+	}
+	~CHashTable()
+	{
+		delete[]Data;
+	}
+	int GetSize()
+	{
+		return Size;
+	}
+	bool Add(int n)
+	{
+		if (Count >= Size)
+			return false;
+		int key = hashcode(n, Size);
+		if (!Data[key].HasValue())
+		{
+			Data[key].SetValue(n);
+			Data[key].SetFlag(true);
+		}
+		else
+		{
+			int keyLink;
+			keyLink = key;
+			key = Data[key].GetLink();
+			int i = Size;
+			while (Data[i].HasValue())
+				i--;
+			Data[i].SetValue(n);
+			Data[i].SetFlag(true);
+			Data[i].SetLink(key);
+			Data[keyLink].SetLink(i);
+		}
+		return true;
+	}
+	CRecord operator[](int index) const
+	{
+		return Data[index];
+	}
+};
